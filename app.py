@@ -3,15 +3,11 @@ from dotenv import load_dotenv
 import os
 import requests
 import random
-import locale
 import time
 
 load_dotenv()
 
 app = Flask(__name__)
-
-# Formateo de numeros con comas
-locale.setlocale(locale.LC_ALL, "")
 
 # API endpoints
 CAT_API_URL = os.getenv("CAT_API_URL")
@@ -27,26 +23,18 @@ COIN_LIST_CACHE_TTL = 600  # 10 minutos
 
 def get_coin_list():
     now = time.time()
-    headers = {"x-cg-pro-api-key": COINGECKO_API_KEY} if COINGECKO_API_KEY else {}
-
+    headers = {"accept": "application/json", "x-cg-pro-api-key": COINGECKO_API_KEY}
+    # print("CoinGecko headers:", headers)
     if (
         coin_list_cache["data"] is None
         or now - coin_list_cache["timestamp"] > COIN_LIST_CACHE_TTL
     ):
-        response = requests.get(COINGECKO_LIST_URL, headers=headers, timeout=8)
+        response = requests.get(COINGECKO_LIST_URL, headers=headers)
+        # print("CoinGecko /coins/list status:", response.status_code, response.text)
         response.raise_for_status()
         coin_list_cache["data"] = response.json()
         coin_list_cache["timestamp"] = now
     return coin_list_cache["data"]
-
-
-# Custom filter for formatting large numbers
-@app.template_filter("format")
-def format_number(value):
-    try:
-        return locale.format_string("%d", value, grouping=True)
-    except (ValueError, TypeError):
-        return value
 
 
 @app.route("/", methods=["GET", "POST"])
