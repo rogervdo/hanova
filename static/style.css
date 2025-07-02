@@ -1,3 +1,10 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #ffffff;
   color: #1a237e;
@@ -5,6 +12,9 @@ body {
   margin: 0;
   padding: 0;
   font-size: 1.15rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -33,6 +43,7 @@ nav a:hover {
 
 main {
   padding: 2rem;
+  flex: 1 0 auto;
 }
 
 button,
@@ -56,11 +67,48 @@ footer {
   color: #1a237e;
   text-align: center;
   padding: 1rem 2rem;
-  position: fixed;
+  position: static;
   width: 100%;
   bottom: 0;
   left: 0;
   font-size: 0.95rem;
+}
+
+.footer-nav {
+  background-color: #3949ab;
+  color: #fff;
+  text-align: center;
+  padding: 0.4rem 2rem;
+  position: static;
+  width: 100%;
+  margin-top: auto;
+  font-size: 1.05rem;
+  z-index: 1001;
+}
+
+.footer-nav-bar {
+  width: 100%;
+  height: 12px;
+  background-color: #3949ab;
+}
+
+.footer-nav nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.footer-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.footer-nav a:hover {
+  background-color: #1a237e;
 }
 
 h1 {
@@ -116,10 +164,10 @@ label {
 .docu-list {
   list-style: none;
   padding: 0;
+  margin-bottom: 0.7em;
+  font-weight: 500;
 }
-.docu-li {
-  margin-bottom: 1.2em;
-}
+
 .docu-li-secondary {
   color: #37474f;
 }
@@ -132,11 +180,20 @@ label {
   padding: 0.1rem 0.3rem;
   border-radius: 3px;
 }
-.docu-ul-indent {
-  padding-left: 1.5rem;
-  line-height: 1.7;
+
+.header-title-link {
+  color: #fff !important;
+  text-decoration: none !important;
+  font-weight: bold;
 }
-.docu-ul-indent2 {
-  padding-left: 1.5rem;
-  line-height: 1.5;
+
+.header-title-link:hover {
+  color: #e3eafc !important;
+  text-decoration: none !important;
+}
+
+.header-title-link:focus,
+.header-title-link:active {
+  color: #fff !important;
+  text-decoration: none !important;
 }

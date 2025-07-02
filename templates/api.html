@@ -5,7 +5,7 @@
     <title>Welcome to HanovaPage2 API</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
-  {% include 'layout.html' %}
+  {% include 'header.html' %}
   <body>
     <main style="max-width: 800px; margin: 0 auto; text-align: center">
       <h1>Colleción de APIs</h1>
@@ -43,7 +43,7 @@
           <input
             type="text"
             name="coin"
-            placeholder="e.g. bitcoin or btc"
+            placeholder="e.g. bitcoin o ethereum"
             required
             style="padding: 0.75rem; border-radius: 4px; border: 1px solid #ccc; margin-right: 0.5rem"
           />
@@ -68,6 +68,6 @@
         {% endif %}
       </section>
     </main>
-    <footer>&copy; 2025 Hanova Technical Case - All Rights Reserved</footer>
+    {% include 'footer.html' %}
   </body>
 </html>

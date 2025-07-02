@@ -69,34 +69,33 @@ def api():
     error = None
 
     if request.method == "POST":
-        user_input = request.form["coin"].lower()
-
-        # CoinGecko wants coin IDs like 'bitcoin', not symbols like 'btc'
-        # So we get the full list of coins to find the match
-        list_url = COINGECKO_LIST_URL
-        list_response = requests.get(list_url)
-        coin_list = list_response.json()
-
-        # Try to match user input to ID or symbol
-        match = next(
-            (
-                c
-                for c in coin_list
-                if c["id"] == user_input or c["symbol"] == user_input
-            ),
-            None,
-        )
-
-        if match:
-            coin_id = match["id"]
-            coin_url = f"{COINGECKO_COIN_URL}{coin_id}"
-            coin_response = requests.get(coin_url)
-            if coin_response.status_code == 200:
+        user_input = request.form["coin"].strip().lower()
+        try:
+            list_response = requests.get(COINGECKO_LIST_URL, timeout=8)
+            list_response.raise_for_status()
+            coin_list = list_response.json()
+            # Buscar por id o symbol (case-insensitive)
+            match = next(
+                (
+                    c
+                    for c in coin_list
+                    if c["id"].lower() == user_input
+                    or c["symbol"].lower() == user_input
+                ),
+                None,
+            )
+            if match:
+                coin_id = match["id"]
+                coin_url = f"{COINGECKO_COIN_URL}{coin_id}"
+                coin_response = requests.get(coin_url, timeout=8)
+                coin_response.raise_for_status()
                 coin_data = coin_response.json()
             else:
-                error = "Couldn't fetch coin data."
-        else:
-            error = "Coin not found. Try full name like 'bitcoin' or symbol like 'btc'."
+                error = (
+                    "Coin not found. Try full name like 'bitcoin' or symbol like 'btc'."
+                )
+        except Exception as e:
+            error = f"Error fetching coin data: {str(e)}"
 
     return render_template(
         "api.html",

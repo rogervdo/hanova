@@ -5,19 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
   </head>
-  {% include 'layout.html' %}
+  {% include 'header.html' %}
   <body>
     <main>
       <section style="text-align: center; max-width: 800px; margin: 0 auto; padding: 2rem">
-        <h1>By Rogelio Villarreal</h1>
-        <h3>Made for Hanova Consulting Technical Case</h3>
+        <h3>Construido para Hanova Technical Case por Rogelio Villarreal</h3>
+        <p>Utilice los siguientes botones para navegar por el sitio:</p>
         <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem">
-          <a href="api" class="btn">API</a>
           <a href="dashboard" class="btn">Dashboard</a>
+          <a href="api" class="btn">API</a>
           <a href="documentacion" class="btn">Documentación</a>
         </div>
+        <p>O haciendo click en el título de la página.</p>
       </section>
     </main>
-    <footer>&copy; 2025 Hanova Technical Case - All Rights Reserved</footer>
+    {% include 'footer.html' %}
   </body>
 </html>
