@@ -1,0 +1,142 @@
+body {
+  background-color: #ffffff;
+  color: #1a237e;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 1.15rem;
+}
+
+header {
+  background-color: #1a237e;
+  color: #ffffff;
+  padding: 1.5rem 2rem;
+  text-align: center;
+}
+
+nav {
+  background-color: #3949ab;
+  padding: 0.5rem 2rem;
+  text-align: center;
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 2rem;
+}
+
+button,
+.btn {
+  background-color: #1a237e;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover,
+.btn:hover {
+  background-color: #3949ab;
+}
+
+footer {
+  background-color: #e3eafc;
+  color: #1a237e;
+  text-align: center;
+  padding: 1rem 2rem;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  font-size: 0.95rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+p,
+li,
+input,
+button,
+a,
+label {
+  font-size: 1.15rem;
+}
+
+.docu-container {
+  max-width: 800px;
+  width: 100%;
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  margin-bottom: 4rem;
+}
+.docu-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #1a237e;
+  letter-spacing: 1px;
+}
+.docu-section-title {
+  color: #3949ab;
+  font-size: 1.3em;
+}
+.docu-subtitle {
+  color: #1976d2;
+}
+.docu-highlight {
+  color: #1976d2;
+  font-weight: bold;
+}
+.docu-list {
+  list-style: none;
+  padding: 0;
+}
+.docu-li {
+  margin-bottom: 1.2em;
+}
+.docu-li-secondary {
+  color: #37474f;
+}
+.docu-li-tertiary {
+  color: #263238;
+}
+.docu-code {
+  background: #e3eafc;
+  color: #1a237e;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+}
+.docu-ul-indent {
+  padding-left: 1.5rem;
+  line-height: 1.7;
+}
+.docu-ul-indent2 {
+  padding-left: 1.5rem;
+  line-height: 1.5;
+}

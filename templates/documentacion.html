@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Documentación</title>
+  </head>
+  {% include 'layout.html' %}
+  <body>
+    <main style="display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 2rem">
+      <div class="docu-container">
+        <h1 class="docu-title">Documentación</h1>
+        <ul class="docu-list">
+          <li class="docu-li">
+            <strong class="docu-section-title">Documentación del proyecto</strong>
+            <ul>
+              <li>
+                <strong class="docu-subtitle">Proceso ETL</strong>
+                <ul class="docu-ul-indent">
+                  <li class="docu-li-tertiary">
+                    Se utilizaron archivos de <span class="docu-highlight">Jupyter Notebook</span> para la limpieza de
+                    los datos, permitiendo experimentación y verificación de resultados de forma visible y sencilla.
+                    Utilizamos <span class="docu-highlight">pandas</span> para la lectura y limpieza de datos. Los
+                    archivos cuentan con explicaciones de funcionalidad.
+                  </li>
+                  <li>
+                    <strong class="docu-subtitle">1.</strong>
+                    <span class="docu-li-tertiary"
+                      >Limpieza de <span class="docu-highlight">world disease statistics</span></span
+                    >
+                    <ul class="docu-ul-indent2">
+                      <li class="docu-li-secondary">
+                        Convertimos los títulos de columnas a minúsculas, remplazando espacios por underscores.
+                      </li>
+                      <li class="docu-li-secondary">Eliminamos filas duplicadas.</li>
+                      <li class="docu-li-secondary">
+                        Convertimos <code class="docu-code">recovered</code> a numérico, transformando valores erróneos
+                        a NaN.
+                      </li>
+                      <li class="docu-li-secondary">
+                        En las columnas <code class="docu-code">cases</code>, <code class="docu-code">deaths</code> y
+                        <code class="docu-code">recovered</code>, agrupamos por país y enfermedad y calculamos el
+                        promedio. Rellenamos espacios vacíos con este promedio.
+                      </li>
+                      <li class="docu-li-secondary">Finalmente insertamos una columna de id, iniciando en uno.</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong class="docu-subtitle">2.</strong>
+                    <span class="docu-li-tertiary"
+                      >Limpieza de <span class="docu-highlight">online store sales</span></span
+                    >
+                    <ul class="docu-ul-indent2">
+                      <li class="docu-li-secondary">
+                        Quitamos la columna izquierda <code class="docu-code">Unnamed:0</code>.
+                      </li>
+                      <li class="docu-li-secondary">
+                        Renombramos <code class="docu-code">Order Date</code> a
+                        <code class="docu-code">Order Time</code>.
+                      </li>
+                      <li class="docu-li-secondary">
+                        Convertimos los títulos de columnas a minúsculas y reemplazamos espacios por underscores.
+                      </li>
+                      <li class="docu-li-secondary">Eliminamos filas duplicadas.</li>
+                      <li class="docu-li-secondary">
+                        Rellenamos tiempos faltantes dentro de <code class="docu-code">order_time</code> con 00:00.0.
+                      </li>
+                      <li class="docu-li-secondary">
+                        Convertimos <code class="docu-code">sales_amount</code> y
+                        <code class="docu-code">discount_applied</code> a números, forzando errores a NaN.
+                      </li>
+                      <li class="docu-li-secondary">
+                        Calculamos el costo promedio de cada categoría de artículos para sustituir en los espacios con
+                        NaN. Rellenamos en las columnas vacías redondeando a 2 decimales.
+                      </li>
+                      <li class="docu-li-secondary">
+                        Rellenamos celdas vacías en <code class="docu-code">discount_applied</code> con 0.
+                      </li>
+                      <li class="docu-li-secondary">
+                        Guardamos como <code class="docu-code">store_cleaned.csv</code>.
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong class="docu-subtitle">3.</strong>
+                    <span class="docu-li-tertiary">Preparación para la visualización</span>
+                    <ul class="docu-ul-indent2">
+                      <li class="docu-li-secondary">
+                        Los archivos CSV se transformaron a formato MySQL mediante ConvertCSV.com.
+                      </li>
+                      <li class="docu-li-secondary">
+                        La base de datos MySQL fue hosteada mediante Aiven. Importamos los dos CSVs transformados y
+                        listos para utilizarse.
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li style="margin-top: 2rem">
+                <strong class="docu-section-title">Proceso Visualización en Looker Studio</strong>
+                <ul class="docu-ul-indent">
+                  <li class="docu-li-tertiary">
+                    Si se desea acceder a la base de datos directamente, se proporcionan los campos requeridos y el
+                    certificado de autenticación en la carpeta <span class="docu-highlight">Database</span>.
+                  </li>
+                  <li>
+                    <strong class="docu-subtitle">1.</strong>
+                    <span class="docu-li-tertiary">Configuración de fuentes de datos</span>
+                    <ul class="docu-ul-indent2">
+                      <li class="docu-li-secondary">
+                        Se realizó la conexión de MySQL, utilizando las credenciales de Aiven. Se crearon dos instancias
+                        de datos, una por cada caso.
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong class="docu-subtitle">2.</strong>
+                    <span class="docu-li-tertiary">Datos calculados y modificados</span>
+                    <ul class="docu-ul-indent2">
+                      <li class="docu-li-secondary">
+                        Se introdujeron campos calculados como el porcentaje de mortalidad o recuperación para
+                        enfermedades, y de ganancias para la tienda online.
+                      </li>
+                      <li class="docu-li-secondary">
+                        Se modificaron los tipos de varios datos como ventas y ganancias a moneda, región de cliente a
+                        continente y country a país.
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </main>
+    <footer>&copy; 2025 Hanova Technical Case - All Rights Reserved</footer>
+  </body>
+</html>

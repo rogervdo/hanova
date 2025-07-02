@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Welcome to HanovaPage2 API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  {% include 'layout.html' %}
+  <body>
+    <main style="max-width: 800px; margin: 0 auto; text-align: center">
+      <h1>Colleción de APIs</h1>
+      <p>Esta página contiene ejemplos de uso de 3 de los APIs proporcionados</p>
+      <hr />
+      <section style="margin: 2rem 0; padding: 1.5rem; background-color: #e3eafc; border-radius: 8px">
+        <h1>🌍 País Aleatorio 🌍</h1>
+        <h2>{{ country.name }}</h2>
+        <img
+          src="{{ country.flag }}"
+          alt="Flag of {{ country.name }}"
+          width="200"
+          style="border: 1px solid #ddd; border-radius: 4px"
+        /><br />
+        <p>
+          <strong>Capital:</strong> {{ country.capital }}<br />
+          <strong>Región:</strong> {{ country.region }}<br />
+          <strong>Población:</strong> {{ country.population | format }}
+        </p>
+
+        <a href="api" class="btn">Obtener otro país</a>
+      </section>
+
+      <section style="margin: 2rem 0; padding: 1.5rem; background-color: #e3eafc; border-radius: 8px">
+        <h1>🐱 Generador de gatos 🐱</h1>
+        <img src="{{ cat_url }}" alt="Random Cat" width="400" style="border-radius: 8px; max-width: 100%" />
+        <br /><br />
+        <a href="api" class="btn">Obtener otro gato</a>
+      </section>
+
+      <section style="margin: 2rem 0; padding: 1.5rem; background-color: #e3eafc; border-radius: 8px">
+        <h1>💲 Checa el estatus de una criptomoneda 💲</h1>
+
+        <form method="POST" style="margin: 1rem 0">
+          <input
+            type="text"
+            name="coin"
+            placeholder="e.g. bitcoin or btc"
+            required
+            style="padding: 0.75rem; border-radius: 4px; border: 1px solid #ccc; margin-right: 0.5rem"
+          />
+          <button type="submit">Buscar!</button>
+        </form>
+
+        {% if error %}
+        <p style="color: red">{{ error }}</p>
+        {% endif %} {% if coin %}
+        <div style="margin-top: 1.5rem">
+          <h2>{{ coin.name }} ({{ coin.symbol.upper() }})</h2>
+          <img src="{{ coin.image.large }}" alt="{{ coin.name }}" width="100" /><br />
+          <p>
+            <strong>Precio actual (USD):</strong> {{ coin.market_data.current_price.usd }}<br />
+            <strong>Capitalización del mercado (market cap) (USD):</strong> {{ coin.market_data.market_cap.usd }}<br />
+            <strong>Más información:</strong>
+            <a href="{{ coin.links.homepage[0] }}" target="_blank" style="color: #1a237e"
+              >{{ coin.links.homepage[0] }}</a
+            >
+          </p>
+        </div>
+        {% endif %}
+      </section>
+    </main>
+    <footer>&copy; 2025 Hanova Technical Case - All Rights Reserved</footer>
+  </body>
+</html>
