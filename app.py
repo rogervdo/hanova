@@ -4,19 +4,40 @@ import os
 import requests
 import random
 import locale
+import time
 
 load_dotenv()
 
 app = Flask(__name__)
 
-# Set locale for number formatting
+# Formateo de numeros con comas
 locale.setlocale(locale.LC_ALL, "")
 
-# API endpoints from environment variables (do not expose defaults)
+# API endpoints
 CAT_API_URL = os.getenv("CAT_API_URL")
 COUNTRY_API_URL = os.getenv("COUNTRY_API_URL")
 COINGECKO_LIST_URL = os.getenv("COINGECKO_LIST_URL")
 COINGECKO_COIN_URL = os.getenv("COINGECKO_COIN_URL")
+COINGECKO_API_KEY = os.getenv("COINGECKO_API_KEY")
+
+# Coin list cache for CoinGecko
+coin_list_cache = {"data": None, "timestamp": 0}
+COIN_LIST_CACHE_TTL = 600  # 10 minutos
+
+
+def get_coin_list():
+    now = time.time()
+    headers = {"x-cg-pro-api-key": COINGECKO_API_KEY} if COINGECKO_API_KEY else {}
+
+    if (
+        coin_list_cache["data"] is None
+        or now - coin_list_cache["timestamp"] > COIN_LIST_CACHE_TTL
+    ):
+        response = requests.get(COINGECKO_LIST_URL, headers=headers, timeout=8)
+        response.raise_for_status()
+        coin_list_cache["data"] = response.json()
+        coin_list_cache["timestamp"] = now
+    return coin_list_cache["data"]
 
 
 # Custom filter for formatting large numbers
@@ -71,9 +92,7 @@ def api():
     if request.method == "POST":
         user_input = request.form["coin"].strip().lower()
         try:
-            list_response = requests.get(COINGECKO_LIST_URL, timeout=8)
-            list_response.raise_for_status()
-            coin_list = list_response.json()
+            coin_list = get_coin_list()
             # Buscar por id o symbol (case-insensitive)
             match = next(
                 (
@@ -87,15 +106,17 @@ def api():
             if match:
                 coin_id = match["id"]
                 coin_url = f"{COINGECKO_COIN_URL}{coin_id}"
-                coin_response = requests.get(coin_url, timeout=8)
+                headers = (
+                    {"x-cg-pro-api-key": COINGECKO_API_KEY} if COINGECKO_API_KEY else {}
+                )
+
+                coin_response = requests.get(coin_url, headers=headers, timeout=8)
                 coin_response.raise_for_status()
                 coin_data = coin_response.json()
             else:
-                error = (
-                    "Coin not found. Try full name like 'bitcoin' or symbol like 'btc'."
-                )
+                error = "Coin no encontrado."
         except Exception as e:
-            error = f"Error fetching coin data: {str(e)}"
+            error = f"Error adquiriendo datos de coin: {str(e)}"
 
     return render_template(
         "api.html",
