@@ -1,12 +1,22 @@
 from flask import Flask, render_template, request
+from dotenv import load_dotenv
+import os
 import requests
 import random
 import locale
+
+load_dotenv()
 
 app = Flask(__name__)
 
 # Set locale for number formatting
 locale.setlocale(locale.LC_ALL, "")
+
+# API endpoints from environment variables (do not expose defaults)
+CAT_API_URL = os.getenv("CAT_API_URL")
+COUNTRY_API_URL = os.getenv("COUNTRY_API_URL")
+COINGECKO_LIST_URL = os.getenv("COINGECKO_LIST_URL")
+COINGECKO_COIN_URL = os.getenv("COINGECKO_COIN_URL")
 
 
 # Custom filter for formatting large numbers
@@ -27,7 +37,7 @@ def home():
 def api():
     # API GATOS
     try:
-        response = requests.get("https://api.thecatapi.com/v1/images/search", timeout=5)
+        response = requests.get(CAT_API_URL, timeout=5)
         response.raise_for_status()
         data = response.json()
         cat_url = data[0]["url"] if data and "url" in data[0] else ""
@@ -36,10 +46,7 @@ def api():
 
     # API PAÍSES
     try:
-        response = requests.get(
-            "https://restcountries.com/v3.1/all?fields=name,flags,capital,region,population",
-            timeout=5,
-        )
+        response = requests.get(COUNTRY_API_URL, timeout=5)
         response.raise_for_status()
         countries = response.json()
         country = random.choice(countries) if countries else {}
@@ -66,7 +73,7 @@ def api():
 
         # CoinGecko wants coin IDs like 'bitcoin', not symbols like 'btc'
         # So we get the full list of coins to find the match
-        list_url = "https://api.coingecko.com/api/v3/coins/list"
+        list_url = COINGECKO_LIST_URL
         list_response = requests.get(list_url)
         coin_list = list_response.json()
 
@@ -82,7 +89,7 @@ def api():
 
         if match:
             coin_id = match["id"]
-            coin_url = f"https://api.coingecko.com/api/v3/coins/{coin_id}"
+            coin_url = f"{COINGECKO_COIN_URL}{coin_id}"
             coin_response = requests.get(coin_url)
             if coin_response.status_code == 200:
                 coin_data = coin_response.json()
