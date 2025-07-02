@@ -15,6 +15,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 header {
@@ -26,8 +27,13 @@ header {
 
 nav {
   background-color: #3949ab;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem;
   text-align: center;
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 nav a {
@@ -44,6 +50,8 @@ nav a:hover {
 main {
   padding: 2rem;
   flex: 1 0 auto;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 button,
@@ -62,16 +70,23 @@ button:hover,
   background-color: #3949ab;
 }
 
-footer {
-  background-color: #e3eafc;
-  color: #1a237e;
+footer,
+.footer,
+.footer-nav {
+  background-color: #3949ab;
+  color: #fff;
   text-align: center;
-  padding: 1rem 2rem;
   position: static;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  font-size: 0.95rem;
+  width: 100vw;
+  max-width: 100vw;
+  min-height: 48px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  overflow-x: hidden;
+  overflow-y: visible;
+  font-size: 1.05rem;
+  flex-shrink: 0;
 }
 
 .footer-nav {
@@ -80,10 +95,13 @@ footer {
   text-align: center;
   padding: 0.4rem 2rem;
   position: static;
-  width: 100%;
-  margin-top: auto;
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0 auto;
   font-size: 1.05rem;
   z-index: 1001;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .footer-nav-bar {
@@ -95,7 +113,13 @@ footer {
 .footer-nav nav {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 1.2rem;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  margin: 0 auto;
 }
 
 .footer-nav a {
@@ -105,10 +129,7 @@ footer {
   padding: 0.3rem 0.7rem;
   border-radius: 4px;
   transition: background 0.2s;
-}
-
-.footer-nav a:hover {
-  background-color: #1a237e;
+  white-space: nowrap;
 }
 
 h1 {
